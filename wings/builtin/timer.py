@@ -25,11 +25,9 @@ class Timer(System):
                 state.started = True
 
 
-class TimeLog(System):
-    async def call(self, world: "World") -> None:
-        time = world.get_entity(world.findall_by_compnent(Time).pop())
-        if time:
-            state: Time = time[Time]
-            print(
-                f"timestamp: {state.timestamp}, after_last_process: {state.time_between_last_call}"
-            )
+from sys import maxsize as _maxsize
+
+
+def enable_time(world: World, priority: int = -_maxsize - 1):
+    world.create_entity(Time())
+    world.add_system(Timer(), priority=priority)
