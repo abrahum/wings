@@ -85,7 +85,9 @@ class World:
         """
         返回所有持有该组件的实体
         """
-        return [i for i in self._components[compnent_type]]
+        if compnent_type in self._components:
+            return [i for i in self._components[compnent_type]]
+        return []
 
     def iter_entity(self, ids: List[EntityId]) -> Iterable[Entity]:
         for id in ids:
@@ -97,4 +99,3 @@ class World:
         """
         for system in self._systems:
             await system.call(world=self)
-
